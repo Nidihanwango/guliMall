@@ -1,5 +1,5 @@
 server:
-  port: 9001
+  port: 8040
 spring:
   application:
     name: gulimall-product
