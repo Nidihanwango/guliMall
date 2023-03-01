@@ -1,7 +1,9 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,14 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 三级分类,获取树形结构分类数据
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list/tree")
 //   @RequiresPermissions("product:category:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
+    public R listWithTree(){
+        List<CategoryEntity> categoryList = categoryService.listWithTree();
 
-        return R.ok().put("page", page);
+        return R.ok().put("categoryList", categoryList);
     }
 
 
@@ -75,15 +77,24 @@ public class CategoryController {
 
         return R.ok();
     }
+    /**
+     * 保存拖拽后节点数据
+     */
+    @RequestMapping("/update/sort")
+//    @RequiresPermissions("product:category:update")
+    public R updateAndSort(@RequestBody CategoryEntity[] category){
+        categoryService.updateBatchById(Arrays.asList(category));
 
+        return R.ok();
+    }
     /**
      * 删除
      */
     @RequestMapping("/delete")
 //    @RequiresPermissions("product:category:delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
-
+//		categoryService.removeByIds(Arrays.asList(catIds));
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
         return R.ok();
     }
 
