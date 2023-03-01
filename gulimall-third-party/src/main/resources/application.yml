@@ -1,0 +1,12 @@
+server:
+  port: 30000
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.130:8848
+    alicloud:
+      access-key: LTAI5tHQrHcJD9JD7X7mmNxE
+      secret-key: H4zBJHEp6QooOrkWgrVnwOEyMv9gSk
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
