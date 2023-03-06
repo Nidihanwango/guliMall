@@ -22,12 +22,14 @@
         <module>renren-generator</module>
         <module>gulimall-gateway</module>
         <module>gulimall-third-party</module>
+        <module>gulimall-search</module>
     </modules>
 
     <properties>
         <spring.boot-version>2.1.8.RELEASE</spring.boot-version>
         <spring.cloud-version>Greenwich.SR3</spring.cloud-version>
         <spring.cloud-alibaba-version>2.1.0.RELEASE</spring.cloud-alibaba-version>
+        <elasticsearch.version>7.4.2</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
@@ -88,6 +90,21 @@
                 <artifactId>servlet-api</artifactId>
                 <version>2.5</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

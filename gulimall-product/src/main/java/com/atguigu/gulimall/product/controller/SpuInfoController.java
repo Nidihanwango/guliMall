@@ -4,12 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.atguigu.gulimall.product.JsontoVo.SpuJsonVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gulimall.product.entity.SpuInfoEntity;
 import com.atguigu.gulimall.product.service.SpuInfoService;
@@ -37,7 +34,7 @@ public class SpuInfoController {
     @RequestMapping("/list")
 //   @RequiresPermissions("product:spuinfo:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuInfoService.queryPage(params);
+        PageUtils page = spuInfoService.listByCondication(params);
 
         return R.ok().put("page", page);
     }
@@ -59,8 +56,8 @@ public class SpuInfoController {
      */
     @RequestMapping("/save")
 //    @RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuJsonVo spuJsonVo){
+		spuInfoService.saveSpuJsonVo(spuJsonVo);
 
         return R.ok();
     }
@@ -86,5 +83,11 @@ public class SpuInfoController {
 
         return R.ok();
     }
+    // /product/spuinfo/{spuId}/up
+    @PostMapping("/{spuId}/up")
+    public R upProduct(@PathVariable Long spuId){
+        spuInfoService.upProductBySpuId(spuId);
 
+        return R.ok();
+    }
 }

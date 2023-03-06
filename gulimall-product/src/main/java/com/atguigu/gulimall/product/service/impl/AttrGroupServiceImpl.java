@@ -153,7 +153,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Override
     public List<AttrGroupRespVo> listAttrGroupWithAttr(Long catelogId) {
-        // 1.校验参数 todo
+        // 1.校验参数
         if (catelogId == null || catelogId == 0) {
             return null;
         }
@@ -161,26 +161,38 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("catelog_id", catelogId);
         List<AttrGroupEntity> attrGroupEntityList = this.list(queryWrapper);
-        // 2.2创建Map存储属性分组id和属性分组关联的所有属性id
-        Map<Long, List<Long>> idRelationMap = new HashMap<>();
-        List<AttrGroupRespVo> result = attrGroupEntityList.stream().map(item -> {
+        if (attrGroupEntityList == null || attrGroupEntityList.isEmpty()) {
+            return null;
+        }
+        // 2.1根据catelogId获取分类下所有属性
+        QueryWrapper<AttrEntity> attrEntityQueryWrapper = new QueryWrapper<AttrEntity>().eq("catelog_id", catelogId);
+        List<AttrEntity> attrList = attrService.list(attrEntityQueryWrapper);
+        if (attrList == null || attrList.isEmpty()) {
+            return null;
+        }
+        // 2.1.1将所有属性按照<id: AttrEntity>存入map中
+        Map<Long, AttrEntity> map = new HashMap<>();
+        attrList.forEach(item -> {
+            map.put(item.getAttrId(), item);
+        });
+        // 3.将属性分组的类型转换为AttrGroupRespVo
+        CopyOnWriteArrayList<AttrGroupRespVo> result = attrGroupEntityList.stream().map(item -> {
             AttrGroupRespVo attrGroupRespVo = new AttrGroupRespVo();
-            idRelationMap.put(item.getAttrGroupId(), null);
             BeanUtils.copyProperties(item, attrGroupRespVo);
             return attrGroupRespVo;
-        }).collect(Collectors.toList());
-        // 3.根据属性分组id获取分组下所有属性
-        // 3.1 从属性分组和属性 关系表中查出 关联的属性id, 存入idRelationMap
-        idRelationMap.entrySet().forEach(entry -> {
-            Long groupId = entry.getKey();
-            List<Long> attrIds = relationDao.listAttrIdsByGroupId(groupId);
-            if (attrIds != null) {
-                entry.setValue(attrIds);
-            }
+        }).collect(Collectors.toCollection(CopyOnWriteArrayList::new));
+        // 3.根据属性分组id获取分组下所有属性 from 属性分组和属性关系表
+        result.forEach(item -> {
+            Long attrGroupId = item.getAttrGroupId();
+            List<Long> attrIds = relationDao.listAttrIdsByGroupId(attrGroupId);
+            attrIds.forEach(id -> {
+                AttrEntity attrEntity = map.get(id);
+                if (attrEntity != null) {
+                    item.getAttrs().add(attrEntity);
+                }
+            });
         });
-        // 3.2
-        // 4.组装成AttrGroupRespVo对象list返回
-        return null;
+        return result;
     }
 
 }

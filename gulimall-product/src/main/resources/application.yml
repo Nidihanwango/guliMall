@@ -1,6 +1,9 @@
 server:
   port: 10001
 spring:
+  thymeleaf:
+    cache: false
+    prefix:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.200.130:3306/gulimall_pms
@@ -12,6 +15,8 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.200.130:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:

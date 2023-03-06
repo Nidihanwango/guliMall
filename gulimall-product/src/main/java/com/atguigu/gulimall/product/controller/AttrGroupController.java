@@ -125,7 +125,7 @@ public class AttrGroupController {
         return R.ok();
     }
 
-    @GetMapping("/{catelogId}/withattr}")
+    @GetMapping("/{catelogId}/withattr")
     public R listAttrGroupWithAttr(@PathVariable Long catelogId){
         List<AttrGroupRespVo> data = attrGroupService.listAttrGroupWithAttr(catelogId);
 

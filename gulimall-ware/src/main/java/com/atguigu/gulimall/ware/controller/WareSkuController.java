@@ -1,15 +1,15 @@
 package com.atguigu.gulimall.ware.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.alibaba.fastjson.JSON;
+import com.atguigu.gulimall.common.to.SkuStockTo;
+import com.atguigu.gulimall.common.utils.F;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
 import com.atguigu.gulimall.ware.service.WareSkuService;
@@ -37,7 +37,7 @@ public class WareSkuController {
     @RequestMapping("/list")
 //   @RequiresPermissions("ware:waresku:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = wareSkuService.queryPage(params);
+        PageUtils page = wareSkuService.queryPageDetail(params);
 
         return R.ok().put("page", page);
     }
@@ -87,4 +87,12 @@ public class WareSkuController {
         return R.ok();
     }
 
+    @PostMapping("/getStock")
+    public F<List<SkuStockTo>> getStock(@RequestBody List<Long> skuIds){
+        List<SkuStockTo> list = wareSkuService.getStock(skuIds);
+
+        F<List<SkuStockTo>> ok = F.ok();
+        ok.setData(list);
+        return ok;
+    }
 }

@@ -4,9 +4,7 @@ import com.atguigu.gulimall.common.constant.ProductAttrType;
 import com.atguigu.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.atguigu.gulimall.product.dao.AttrGroupDao;
 import com.atguigu.gulimall.product.dao.CategoryDao;
-import com.atguigu.gulimall.product.entity.AttrAttrgroupRelationEntity;
-import com.atguigu.gulimall.product.entity.AttrGroupEntity;
-import com.atguigu.gulimall.product.entity.CategoryEntity;
+import com.atguigu.gulimall.product.entity.*;
 import com.atguigu.gulimall.product.service.CategoryService;
 import com.atguigu.gulimall.product.vo.AttrResponVo;
 import com.atguigu.gulimall.product.vo.AttrVo;
@@ -25,7 +23,6 @@ import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.common.utils.Query;
 
 import com.atguigu.gulimall.product.dao.AttrDao;
-import com.atguigu.gulimall.product.entity.AttrEntity;
 import com.atguigu.gulimall.product.service.AttrService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -178,6 +175,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             }
         }
 
+    }
+
+    @Override
+    public List<Long> listEsSkuAttrId(List<Long> attrIds) {
+        return baseMapper.listEsSkuAttrId(attrIds);
     }
 
 }

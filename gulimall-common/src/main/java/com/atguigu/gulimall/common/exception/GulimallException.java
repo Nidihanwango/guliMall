@@ -2,7 +2,8 @@ package com.atguigu.gulimall.common.exception;
 
 public enum GulimallException {
     UNKNOW_EXCEPTION(10000, "未知异常"),
-    VALID_EXCEPTION(10001, "校验未通过");
+    VALID_EXCEPTION(10001, "校验未通过"),
+    PRODUCT_UP_EXCEPTION(10010, "商品上架异常");
 
     private final int code;
     private final String message;

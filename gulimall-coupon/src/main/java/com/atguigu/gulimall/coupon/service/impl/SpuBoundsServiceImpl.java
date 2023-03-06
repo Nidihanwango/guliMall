@@ -1,5 +1,7 @@
 package com.atguigu.gulimall.coupon.service.impl;
 
+import com.atguigu.gulimall.common.to.SpuBoundTo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

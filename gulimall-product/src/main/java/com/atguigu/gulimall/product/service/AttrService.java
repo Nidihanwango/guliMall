@@ -1,11 +1,13 @@
 package com.atguigu.gulimall.product.service;
 
+import com.atguigu.gulimall.product.entity.ProductAttrValueEntity;
 import com.atguigu.gulimall.product.vo.AttrResponVo;
 import com.atguigu.gulimall.product.vo.AttrVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.gulimall.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.AttrEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +29,7 @@ public interface AttrService extends IService<AttrEntity> {
 
 
     void updateDetail(AttrVo attrVo);
+
+    List<Long> listEsSkuAttrId(List<Long> attrIds);
 }
 

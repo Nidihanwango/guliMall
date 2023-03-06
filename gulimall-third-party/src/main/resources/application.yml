@@ -6,7 +6,7 @@ spring:
       discovery:
         server-addr: 192.168.200.130:8848
     alicloud:
-      access-key: LTAI5tDhpGaCNunDsvNm5YcJ
-      secret-key: 0xhPfLoVqNRgTHtJq0BE8LlaBdJqD3
+      access-key: LTAI5tQ9kPoE97vhCFtbXNDJ
+      secret-key: gKZrZoR1rxmb0fVuNgfPYym8Qeh2Q8
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
