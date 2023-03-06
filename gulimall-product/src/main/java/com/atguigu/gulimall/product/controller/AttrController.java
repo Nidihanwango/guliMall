@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.atguigu.gulimall.product.vo.AttrResponVo;
+import com.atguigu.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +37,10 @@ public class AttrController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @RequestMapping("/{attrType}/list/{catelogId}")
 //   @RequiresPermissions("product:attr:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrService.queryPage(params);
+    public R list(@PathVariable("attrType") String attrType, @RequestParam Map<String, Object> params, @PathVariable Long catelogId){
+        PageUtils page = attrService.typeListByCatelogId(attrType, params, catelogId);
 
         return R.ok().put("page", page);
     }
@@ -49,9 +52,9 @@ public class AttrController {
     @RequestMapping("/info/{attrId}")
 //    @RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+		AttrResponVo attrResponVo = attrService.getAttrById(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", attrResponVo);
     }
 
     /**
@@ -59,8 +62,8 @@ public class AttrController {
      */
     @RequestMapping("/save")
 //    @RequiresPermissions("product:attr:save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+    public R save(@RequestBody AttrVo attrVo){
+		attrService.saveDetail(attrVo);
 
         return R.ok();
     }
@@ -70,8 +73,8 @@ public class AttrController {
      */
     @RequestMapping("/update")
 //    @RequiresPermissions("product:attr:update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
+    public R update(@RequestBody AttrVo attrVo){
+		attrService.updateDetail(attrVo);
 
         return R.ok();
     }

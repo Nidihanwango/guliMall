@@ -1,10 +1,13 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +44,19 @@ public class CategoryBrandRelationController {
 
         return R.ok().put("page", page);
     }
+    @RequestMapping("/list/{brandId}")
+//   @RequiresPermissions("product:categorybrandrelation:list")
+    public R listByBrandId(@RequestParam Map<String, Object> params, @PathVariable Long brandId){
+        List<CategoryBrandRelationEntity> result = categoryBrandRelationService.getByBrandId(brandId);
+        return R.ok().put("data", result);
+    }
 
+    @RequestMapping("/brands/list")
+    public R listByCatId(@RequestParam Map<String, Object> params){
+        List<CategoryBrandRelationEntity> result = categoryBrandRelationService.getByCatId(params);
+
+        return R.ok().put("data", result);
+    }
 
     /**
      * 信息
@@ -60,7 +75,7 @@ public class CategoryBrandRelationController {
     @RequestMapping("/save")
 //    @RequiresPermissions("product:categorybrandrelation:save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-		categoryBrandRelationService.save(categoryBrandRelation);
+		categoryBrandRelationService.saveDetail(categoryBrandRelation);
 
         return R.ok();
     }
@@ -84,6 +99,13 @@ public class CategoryBrandRelationController {
     public R delete(@RequestBody Long[] ids){
 		categoryBrandRelationService.removeByIds(Arrays.asList(ids));
 
+        return R.ok();
+    }
+
+    @RequestMapping("/deleteById/{id}")
+//    @RequiresPermissions("product:categorybrandrelation:delete")
+    public R deleteById(@PathVariable Long id){
+        categoryBrandRelationService.removeById(id);
         return R.ok();
     }
 

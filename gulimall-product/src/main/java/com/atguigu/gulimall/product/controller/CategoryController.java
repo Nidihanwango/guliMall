@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.atguigu.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +35,6 @@ import com.atguigu.gulimall.common.utils.R;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
     /**
      * 三级分类,获取树形结构分类数据
      */
@@ -43,7 +45,6 @@ public class CategoryController {
 
         return R.ok().put("categoryList", categoryList);
     }
-
 
     /**
      * 信息
@@ -70,10 +71,11 @@ public class CategoryController {
     /**
      * 修改
      */
+    @Transactional
     @RequestMapping("/update")
 //    @RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+        categoryService.updateByIdDetail(category);
 
         return R.ok();
     }
