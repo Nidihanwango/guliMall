@@ -2,7 +2,6 @@ package com.atguigu.gulimall.product.vo;
 
 import com.atguigu.gulimall.product.entity.AttrEntity;
 import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,4 +14,5 @@ public class AttrGroupRespVo {
     private String icon;
     private Long catelogId;
     private List<AttrEntity> attrs = new ArrayList<>();
+
 }

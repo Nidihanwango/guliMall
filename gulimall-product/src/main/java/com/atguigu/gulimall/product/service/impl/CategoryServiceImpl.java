@@ -1,9 +1,6 @@
 package com.atguigu.gulimall.product.service.impl;
 
 import com.atguigu.gulimall.product.dao.CategoryBrandRelationDao;
-import com.atguigu.gulimall.product.service.CategoryBrandRelationService;
-import com.atguigu.gulimall.product.vo.CategoryVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
